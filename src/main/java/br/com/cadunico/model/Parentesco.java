@@ -1,0 +1,9 @@
+package br.com.cadunico.model;
+
+public enum Parentesco {
+
+	SELECIONE, RESPONSAVEL_FAMILIAR, CONJUGE, FILHOS, ENTEADOS, NETOS, PAI_MAE, SOGRO, IRMAOS, 
+	GENRO_NORA,OUTROS_PARENTES, NAO_PARENTE;
+	
+	
+}

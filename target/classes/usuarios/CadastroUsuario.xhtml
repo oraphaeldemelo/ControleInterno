@@ -1,0 +1,114 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
+
+
+	<ui:define name="titulo">Cadastrar Usuario</ui:define>
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<f:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}" />
+		</f:metadata>
+
+		<div>
+			<h:form id="cadUsuario">
+				<p:messages autoUpdate="true" />
+				<h2>Cadastrar Novo Usuário</h2>
+				<fieldset>
+					<legend>Dados Pessoais</legend>
+					<p:panelGrid columns="2">
+
+						<p:outputLabel value="Codigo Familiar" for="codFamiliar" />
+						<p:inputText id="codFamiliar"
+							value="#{cadastroUsuarioBean.usuario.codFamiliar}" required="true" >
+							<p:ajax event="blur"
+								listener="#{cadastroUsuarioBean.enderecoSelecionado}"
+								update="cadUsuario" />
+						</p:inputText>
+
+						<p:outputLabel value="Nome:" for="nome" />
+						<p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}" required="true" />
+
+						<p:outputLabel value="Apelido" for="apelido" />
+						<p:inputText id="apelido"
+							value="#{cadastroUsuarioBean.usuario.apelido}" />
+
+						<p:outputLabel value="NIS" for="nis" />
+						<p:inputText id="nis" value="#{cadastroUsuarioBean.usuario.nis}" required="true"/>
+
+						<p:outputLabel value="Parentesco" for="parentesco" />
+						<h:selectOneMenu id="parentesco"
+							value="#{cadastroUsuarioBean.usuario.parentesco}" required="true">
+							<f:selectItem itemLabel="Selecione..." itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{cadastroUsuarioBean.parentescos}" />
+						</h:selectOneMenu>
+
+						<p:outputLabel value="CPF" for="cpf" />
+						<p:inputMask id="cpf" value="#{cadastroUsuarioBean.usuario.cpf}"
+							mask="999.999.999-99" size="16" />
+
+						<p:outputLabel value="Data de Atualização/Cadastro"
+							for="dataAtualizacao" />
+						<p:calendar id="dataAtualizacao" size="20"
+							value="#{cadastroUsuarioBean.usuario.dataAtualizacao}"
+							pattern="dd/MM/yyyy" required="true"/>
+					</p:panelGrid>
+				</fieldset>
+
+
+				<fieldset>
+					<legend>Endereco</legend>
+					<p:panelGrid columns="2" id="endereco-usuario">
+						<p:outputLabel value="Localidade:" for="localidade" />
+						<p:inputText id="localidade"
+							value="#{cadastroUsuarioBean.endereco.localidade}" required="true"/>
+
+						<p:outputLabel value="Logradouro" for="logradouro" />
+						<p:inputText id="logradouro"
+							value="#{cadastroUsuarioBean.endereco.logradouro}" required="true"/>
+
+						<p:outputLabel value="Nº" for="numero" />
+						<p:inputText id="numero"
+							value="#{cadastroUsuarioBean.endereco.numero}" />
+
+						<p:outputLabel value="Complemento" for="complemento" />
+						<p:inputText id="complemento"
+							value="#{cadastroUsuarioBean.endereco.complemento}" />
+
+						<p:outputLabel for="zona" value="Zona" />
+						<p:selectOneRadio id="zona"
+							value="#{cadastroUsuarioBean.endereco.zona}">
+							<f:selectItems value="#{cadastroUsuarioBean.zonas}" required="true"/>
+						</p:selectOneRadio>
+
+						<p:outputLabel value="Ponto de Referência" for="pontoReferencia" />
+						<p:inputTextarea id="pontoReferencia"
+							value="#{cadastroUsuarioBean.endereco.referencia}" required="true" requiredMessage="Insira um ponto de referência!"/>
+
+					</p:panelGrid>
+				</fieldset>
+
+
+				<fieldset>
+					<legend>Pasta</legend>
+					<p:panelGrid columns="2" id="pastas">
+						<p:outputLabel value="Nº da Pasta" for="numeroPasta" />
+						<p:inputText id="numeroPasta"
+							value="#{cadastroUsuarioBean.usuario.pasta}" />
+
+					</p:panelGrid>
+				</fieldset>
+
+				<p:commandButton value="Salvar"
+					action="#{cadastroUsuarioBean.salvar}" />
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

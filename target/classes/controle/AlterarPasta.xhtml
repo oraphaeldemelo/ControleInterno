@@ -1,0 +1,54 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="titulo">Alterar Pasta</ui:define>
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<o:viewParam name="usuario" value="#{alterarPastasBean.usuario}" />
+		</f:metadata>
+
+		<h2>Alterar Pasta</h2>
+		<div>
+			<h:form>
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Numero da Pasta:" for="pasta" />
+					<h:inputText size="5" id="pasta"
+						value="#{alterarPastasBean.usuario.pasta}"
+						pt:placeholder="#{alterarPastasBean.usuario.pasta}" />
+
+					<h:outputLabel value="Código Familiar:" for="codFamiliar" />
+					<h:outputText id="codFamiliar"
+						value="#{alterarPastasBean.usuario.codFamiliar}" />
+
+
+					<h:outputLabel value="Nome: " for="nome" />
+					<h:outputLabel id="nome" value="#{alterarPastasBean.usuario.nome}" />
+
+
+					<h:outputLabel value="NIS: " for="nis" />
+					<h:outputLabel id="nis" value="#{alterarPastasBean.usuario.nis}" />
+
+
+					<h:outputLabel value="Armário: " for="armario" />
+					<h:outputText id="armario"
+						value="#{alterarPastasBean.usuario.endereco.zona}" />
+
+					<h:outputLabel value="Bairro / Comunidade: " for="localidade" />
+					<h:outputText id="localidade"
+						value="#{alterarPastasBean.usuario.endereco.localidade}" />
+
+					<p:commandButton value="Alterar"
+						action="#{alterarPastasBean.alterar}" />
+				</p:panelGrid>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,95 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">Controle de Pastas</ui:define>
+
+	<ui:define name="corpo">
+
+		<div>
+			<h:form id="controle">
+				<p:messages autoUpdate="true" />
+
+				<h2>Controle de Pastas</h2>
+
+
+				<p:panelGrid columns="2" id="painelPesquisa">
+					<p:outputLabel value="Código Familiar" for="pesqCod" />
+					<p:inputText id="pesqCod" value="#{controlePastasBean.pesqCod}">
+						<p:ajax event="blur"
+							listener="#{controlePastasBean.porCodFamiliar}" update="controle" />
+					</p:inputText>
+
+					<p:outputLabel value="Nome" for="pesqNome" />
+					<p:inputText id="pesqNome" value="#{controlePastasBean.pesqNome}">
+						<p:ajax event="blur" listener="#{controlePastasBean.porNome}"
+							update="controle" />
+					</p:inputText>
+
+					<p:outputLabel value="NIS" for="pesqNis" />
+					<p:inputText id="pesqNis" value="#{controlePastasBean.pesqNis}">
+						<p:ajax event="blur" listener="#{pessoasCadastradasBean.porNis}"
+							update="controle" />
+					</p:inputText>
+
+					<p:outputLabel value="Bairro/Comunidade" for="pesqEnd" />
+					<p:inputText id="pesqEnd" value="#{controlePastasBean.pesqLocal}">
+						<p:ajax event="blur" listener="#{controlePastasBean.porLocal}"
+							update="controle" />
+					</p:inputText>
+				</p:panelGrid>
+
+				<p:dataTable value="#{controlePastasBean.usuarios}" var="usuario"
+					scrollHeight="300" paginator="true" rows="10"
+					paginatorPosition="bottom" tableStyle="table-layout:auto">
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{usuario.nome}" />
+
+					</p:column>
+
+					<p:column headerText="Ultima Atualização">
+						<h:outputText value="#{usuario.dataAtualizacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Código Familiar">
+						<h:outputText value="#{usuario.codFamiliar}" />
+					</p:column>
+
+					<p:column headerText="NIS">
+						<h:outputText value="#{usuario.nis}" />
+					</p:column>
+
+					<p:column headerText="Localidade">
+						<h:outputText value="#{usuario.endereco.localidade}" />
+					</p:column>
+
+					<p:column headerText="Bairro / Comunidade">
+						<h:outputText value="#{usuario.endereco.logradouro}" />
+					</p:column>
+
+					<p:column headerText="Pasta">
+						<h:outputText value="#{usuario.pasta}" />
+					</p:column>
+
+
+					<p:column headerText="Ações">
+					<h:link outcome="/usuarios/CadastroUsuario" title="Editar Pasta"> 
+						<h:graphicImage library="images" name="edit.png"></h:graphicImage>
+						<f:param name="usuario" value="#{usuario.id}" />
+					</h:link>
+						
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

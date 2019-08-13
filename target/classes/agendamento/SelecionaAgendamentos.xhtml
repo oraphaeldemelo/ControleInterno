@@ -1,0 +1,215 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="titulo">Agendamento de Visitas</ui:define>
+
+	<ui:define name="corpo">
+		<h2>Selecione as visitas para a lista</h2>
+
+
+		<h:link title="Voltar" outcome="/agendamento/ListaAgendamentos">
+			<h:graphicImage library="images" name="reply.png" style="padding:5px"></h:graphicImage>
+		</h:link>
+
+		<h:commandLink title="Imprimir Visitas" action="#{selecaoVisitasBean.imprimir}">
+			<h:graphicImage library="images" name="printer.png"
+				style="padding:5px" />
+		</h:commandLink>
+
+		<p:separator />
+
+
+		<div>
+			<p:tabView>
+				<p:tab title="Sede" id="sede">
+
+					<p:outputLabel value="Pesquisar: " />
+					<p:inputText />
+					<h:form id="formUrbana">
+						<p:dataTable id="formUrbana" scrollable="true" scrollHeight="200"
+							value="#{selecaoVisitasBean.visitasSede}" var="visita"
+							rows="10" paginator="true"
+							selection="#{selecaoVisitasBean.visitasEscolhidas}"
+							rowKey="#{visita}" style="font-size: 10px">
+
+							<p:column selectionMode="multiple"
+								style="width:16px;text-align:center" />
+							<p:column headerText="Data do Pedido" style="width:80px">
+								<h:outputText value="#{visita.dataAgendamento}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Nome"  filterBy="#{visita.nome}">
+								<h:outputText value="#{visita.nome}" />
+							</p:column>
+
+							<p:column headerText="Apelido">
+								<h:outputText value="#{visita.apelido}" />
+							</p:column>
+
+							<p:column headerText="NIS">
+								<h:outputText value="#{visita.nis}" />
+							</p:column>
+
+							<p:column headerText="Rua">
+								<h:outputText value="#{visita.enderecoVisita.localRua}" />
+							</p:column>
+
+							<p:column headerText="Nº" style="width:20px">
+								<h:outputText value="#{visita.enderecoVisita.numero}" />
+							</p:column>
+
+							<!--Fazer um filtro para os bairros  -->
+							<p:column headerText="Bairro">
+								<h:outputText value="#{visita.enderecoVisita.localidadeBairro}" />
+							</p:column>
+
+							<p:column headerText="Ponto de Referência">
+								<h:outputText value="#{visita.enderecoVisita.pontoReferencia}" />
+							</p:column>
+
+							<p:column headerText="Observações">
+								<h:outputText value="#{visita.observacao}" />
+							</p:column>
+
+							<p:column headerText="Motivo da Visita">
+								<h:outputText value="#{visita.motivoVisita}" />
+							</p:column>
+
+							<f:facet name="footer">
+								<p:commandButton update="resultVisitas" value="Salvar Marcadas"
+									style="font-size:12px" />
+							</f:facet>
+						</p:dataTable>
+
+					</h:form>
+
+				</p:tab>
+
+				<p:tab title="Rural">
+
+					<p:outputLabel value="Pesquisar: " />
+					<p:inputText />
+					<h:form id="formRural">
+						<p:dataTable id="formRural" scrollable="true" scrollHeight="200"
+							paginator="true" value="#{selecaoVisitasBean.visitasRural}"
+							var="rural" selection="#{selecaoVisitasBean.visitasEscolhidas}"
+							rowKey="#{rural}" style="font-size: 10px">
+
+							<p:column selectionMode="multiple"
+								style="width:16px;text-align:center" />
+
+							<p:column headerText="Data do Pedido">
+								<h:outputText value="21/02/2018" />
+							</p:column>
+
+							<p:column headerText="Nome">
+								<h:outputText value="#{rural.nome}" />
+							</p:column>
+
+							<p:column headerText="Apelido">
+								<h:outputText value="#{rural.apelido}" />
+							</p:column>
+
+							<p:column headerText="NIS">
+								<h:outputText value="#{rural.nis}" />
+							</p:column>
+
+							<p:column headerText="Rua">
+								<h:outputText value="#{rural.enderecoVisita.localRua}" />
+							</p:column>
+
+							<p:column headerText="Nº" style="width:20px">
+								<h:outputText value="#{rural.enderecoVisita.numero}" />
+							</p:column>
+
+							<p:column headerText="Bairro">
+								<h:outputText value="#{rural.enderecoVisita.localidadeBairro}" />
+							</p:column>
+
+							<p:column headerText="Ponto de Referência">
+								<h:outputText value="#{rural.enderecoVisita.pontoReferencia}" />
+							</p:column>
+
+							<p:column headerText="Observações">
+								<h:outputText value="#{rural.observacao}" />
+							</p:column>
+
+							<p:column headerText="Motivo da Visita">
+								<h:outputText value="#{rural.motivoVisita}" />
+							</p:column>
+
+							<f:facet name="footer">
+								<p:commandButton update="resultVisitas" value="Salvar Marcadas"
+									style="font-size:12px" />
+							</f:facet>
+						</p:dataTable>
+
+					</h:form>
+				</p:tab>
+
+
+			</p:tabView>
+		</div>
+		<br />
+		<h:form id="resultVisitas">
+
+
+			<p:dataTable id="resultVisitas" scrollHeight="200"
+				value="#{selecaoVisitasBean.visitasEscolhidas}" var="visita"
+				rows="20" style="font-size: 10px">
+
+
+				<p:column headerText="Data do Pedido" style="width:80px">
+					<h:outputText value="#{visita.dataAgendamento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{visita.nome}" />
+				</p:column>
+
+				<p:column headerText="Apelido">
+					<h:outputText value="#{visita.apelido}" />
+				</p:column>
+
+				<p:column headerText="NIS">
+					<h:outputText value="#{visita.nis}" />
+				</p:column>
+
+				<p:column headerText="Rua">
+					<h:outputText value="#{visita.enderecoVisita.localRua}" />
+				</p:column>
+
+				<p:column headerText="Nº" style="width:20px">
+					<h:outputText value="#{visita.enderecoVisita.numero}" />
+				</p:column>
+
+				<!--Fazer um filtro para os bairros  -->
+				<p:column headerText="Bairro">
+					<h:outputText value="#{visita.enderecoVisita.localidadeBairro}" />
+				</p:column>
+
+				<p:column headerText="Ponto de Referência">
+					<h:outputText value="#{visita.enderecoVisita.pontoReferencia}" />
+				</p:column>
+
+				<p:column headerText="Observações">
+					<h:outputText value="#{visita.observacao}" />
+				</p:column>
+
+				<p:column headerText="Motivo da Visita">
+					<h:outputText value="#{visita.motivoVisita}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

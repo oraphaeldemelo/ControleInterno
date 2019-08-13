@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="titulo">Controle Interno</ui:insert></title>
+	<h:outputStylesheet library="css" name="sistema.css" />
+
+</h:head>
+<h:body>
+	<header>
+	<div style="float: left;">
+		<h:link outcome="/Home" styleClass="logomarca">
+		<p:graphicImage library="images" name="logo_cadunico.png"></p:graphicImage>
+		</h:link>
+	</div>
+
+	<div style="float: right; margin-right: 110px">
+		<h:form style="display: inline-block">
+			<p:toolbar styleClass="menu-sistema">
+				<p:toolbarGroup>
+					<p:button value="Pessoas Cadastradas"
+						outcome="/usuarios/PessoasCadastradas" />
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup>
+					<p:button value="Controle de Pastas"
+						outcome="/controle/ControlePastas" />
+				</p:toolbarGroup>
+
+
+				<p:toolbarGroup>
+					<p:button value="Agendamento de Visitas"
+						outcome="/agendamento/ListaAgendamentos" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+	</div>
+	<div style="clear: both"></div>
+	</header>
+
+	<div id="conteudo">
+		<ui:insert name="corpo" />
+
+	</div>
+
+	<p:separator />
+
+	<footer> Sistema de Controle Interno do Cadastro Único de
+	Pentecoste
+	<div style="float: right">Criado por Raphael de Melo©</div>
+	</footer>
+</h:body>
+</html>

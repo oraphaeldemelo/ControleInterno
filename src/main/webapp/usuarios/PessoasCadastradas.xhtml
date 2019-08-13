@@ -1,0 +1,94 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<ui:define name="titulo">Pessoas Cadastradas</ui:define>
+
+	<ui:define name="corpo" >
+		<h:form id="pessoas">
+			<p:messages autoUpdate="true" showDetail="true" />
+
+			<h2>Pessoas Cadastradas</h2>
+			<p:button value="Adicionar Usuario"
+				outcome="/usuarios/CadastroUsuario" />
+
+			<br />
+
+			<p:panelGrid columns="2" id="painelPesquisa" >
+				<p:outputLabel value="Código Familiar" for="pesqCod" />
+				<p:inputText id="pesqCod" value="#{pessoasCadastradasBean.pesqCod}">
+					<p:ajax event="blur"
+						listener="#{pessoasCadastradasBean.porCodFamiliar}"
+						update="pessoas" />
+				</p:inputText>
+
+				<p:outputLabel value="Nome" for="pesqNome" />
+				<p:inputText id="pesqNome"
+					value="#{pessoasCadastradasBean.pesqNome}">
+					<p:ajax event="blur" listener="#{pessoasCadastradasBean.porNome}"
+						update="pessoas" />
+				</p:inputText>
+
+				<p:outputLabel value="NIS" for="pesqNis" />
+				<p:inputText id="pesqNis" value="#{pessoasCadastradasBean.pesqNis}">
+					<p:ajax event="blur" listener="#{pessoasCadastradasBean.porNis}"
+						update="pessoas" />
+				</p:inputText>
+			</p:panelGrid>
+
+
+			<p:dataTable id="listaPessoas"
+				value="#{pessoasCadastradasBean.usuarios}" var="usuario"
+				scrollHeight="350" paginator="true" rows="10" tableStyle="table-layout:auto">
+
+
+				<p:column headerText="Código Familiar">
+					<h:outputText value="#{usuario.codFamiliar}" />
+				</p:column>
+
+				<p:column headerText="NIS">
+					<h:outputText value="#{usuario.nis}" />
+				</p:column>
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+
+				<p:column headerText="Apelido">
+					<h:outputText value="#{usuario.apelido}" />
+				</p:column>
+
+				<p:column headerText="Parentesco">
+					<h:outputText value="#{usuario.parentesco}" />
+				</p:column>
+
+
+				<p:column>
+
+					<h:commandLink action="#{pessoasCadastradasBean.excluir}" title="Excluir Usuario">
+						<h:graphicImage library="images" name="delete.png"></h:graphicImage>
+						<f:setPropertyActionListener value="#{usuario}"
+							target="#{pessoasCadastradasBean.usuarioSelecionado}" />
+					</h:commandLink>
+
+					<h:link outcome="/usuarios/DadosUsuario" title="Dados do Usuário">
+						<h:graphicImage library="images" name="information.png"></h:graphicImage>
+						<f:param name="usuario" value="#{usuario.id}" />
+					</h:link>
+
+
+				</p:column>
+
+
+
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>

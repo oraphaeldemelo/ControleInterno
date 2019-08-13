@@ -1,0 +1,119 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="titulo">Dados do Usuario</ui:define>
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<f:viewParam name="usuario"
+				value="#{dadosUsuarioBean.usuarioSelecionado}" />
+		</f:metadata>
+
+
+		<div id="detalheUsuario">
+			<h2>Dados do Usuário</h2>
+			<p:button value="Voltar" outcome="/usuarios/PessoasCadastradas" />
+
+			<p:tabView>
+				<p:tab title="RF">
+					<h:panelGrid columns="3" cellpadding="2">
+						<p:column>
+							<h:panelGrid columns="2" cellpadding="2" cellspacing="10">
+								<h:outputText value="Data de Atualização: " />
+								<h:outputText
+									value="#{dadosUsuarioBean.usuarioSelecionado.dataAtualizacao}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+								
+								
+								<h:outputText value="Código Familiar: " />
+								<h:outputText
+									value="#{dadosUsuarioBean.usuarioSelecionado.codFamiliar}" />
+
+								<h:outputText value="Nome: " />
+								<h:outputText
+									value="#{dadosUsuarioBean.usuarioSelecionado.nome}" />
+
+								<p:outputLabel value="NIS: " />
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.nis}" />
+
+								<p:outputLabel value="Apelido: " />
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.apelido}" />
+
+								<p:outputLabel value="Parentesco: " />
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.parentesco}" />
+
+								<p:outputLabel value="CPF: " />
+								
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.cpf}" />
+							</h:panelGrid>
+						</p:column>
+
+						<p:column style="border-left:2px">
+							<h:panelGrid columns="2" cellpadding="5" cellspacing="5">
+								<p:outputLabel value="Endereco: " />
+								<p:outputLabel />
+
+								<p:outputLabel value="Logradouro: " />
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.endereco.logradouro}" />
+
+								<p:outputLabel value="Nº: " />
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.endereco.numero}" />
+
+								<p:outputLabel value="Complemento: " />
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.endereco.complemento}" />
+
+								<p:outputLabel value="Localidade: " />
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.endereco.localidade}" />
+
+								<p:outputLabel value="Ponto de Referência: " />
+								<p:outputLabel
+									value="#{dadosUsuarioBean.usuarioSelecionado.endereco.referencia}" />
+							</h:panelGrid>
+						</p:column>
+
+					</h:panelGrid>
+				</p:tab>
+
+				<p:tab title="Dependentes">
+					<p:dataTable value="#{dadosUsuarioBean.familiaSelecionada}" var="usuarios">
+						<p:column headerText="Nome">
+							<h:outputText value="#{usuarios.nome}" />
+						</p:column>
+
+						<p:column headerText="NIS">
+							<h:outputText value="#{usuarios.nis}" />
+						</p:column>
+						
+						<p:column headerText="Parentesco">
+							<h:outputText value="#{usuarios.parentesco}" />
+						</p:column>
+						
+						<p:column headerText="Apelido">
+							<h:outputText value="#{usuarios.apelido}" />
+						</p:column>
+						
+						<p:column headerText="CPF	">
+							<h:outputText value="#{usuarios.cpf}" />
+						</p:column>
+						
+					</p:dataTable>
+				</p:tab>
+			</p:tabView>
+
+		</div>
+	</ui:define>
+</ui:composition>

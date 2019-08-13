@@ -1,0 +1,85 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">Novo Agendamento</ui:define>
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			<f:viewParam name="visita" value="#{agendamentoBean.selecionado}" />
+		</f:metadata>
+
+		<div>
+			<h:form id="formularioAgendamento">
+			<p:messages autoUpdate="true" />
+		
+				<h2>Novo Agendamento</h2>
+
+				<p:panelGrid columns="4">
+
+					<p:outputLabel value="Data Agendamento" for="dataAgendamento" />
+					<p:calendar id="dataAgendamento" size="20"
+							value="#{agendamentoBean.selecionado.dataAgendamento}"
+							pattern="dd/MM/yyyy" required="true"/>
+
+					<p:outputLabel value="Nome" for="nome" />
+					<p:inputText id="nome" value="#{agendamentoBean.selecionado.nome}" required="true"/>
+
+
+					<p:outputLabel value="Apelido" for="apelido" />
+					<p:inputText id="apelido"
+						value="#{agendamentoBean.selecionado.apelido}" />
+
+
+
+					<p:outputLabel value="Zona" for="zona" />
+					<p:selectOneMenu id="zona"
+						value="#{agendamentoBean.selecionado.enderecoVisita.zona}" required="true">
+						<f:selectItem itemLabel="Selecione..." itemValue=""
+							noSelectionOption="true" />
+						<f:selectItem itemLabel="Urbana" itemValue="URBANA" />
+						<f:selectItem itemLabel="Rural" itemValue="RURAL" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="Rua/Comunidade" for="rua" />
+					<p:inputText id="rua"
+						value="#{agendamentoBean.selecionado.enderecoVisita.localRua}" required="true"/>
+
+
+					<p:outputLabel value="Nº" for="numero" />
+					<p:inputText size="10" id="numero"
+						value="#{agendamentoBean.selecionado.enderecoVisita.numero}" />
+
+
+					<p:outputLabel value="Bairro/Região" for="localidade" />
+					<p:inputText id="localidade"
+						value="#{agendamentoBean.selecionado.enderecoVisita.localidadeBairro}" />
+
+
+					<p:outputLabel value="Ponto de Referência" for="referencia" />
+					<p:inputTextarea id="referencia"
+						value="#{agendamentoBean.selecionado.enderecoVisita.pontoReferencia}" required="true"/>
+
+					<p:outputLabel value="Motivo da Visita" for="motivo" />
+					<p:inputText id="motivo"
+						value="#{agendamentoBean.selecionado.motivoVisita}" required="true"/>
+
+
+					<p:outputLabel value="Observações" for="observacao" />
+					<p:inputTextarea id="observacao"
+						value="#{agendamentoBean.selecionado.observacao}" />
+
+				</p:panelGrid>
+
+				<p:commandButton value="Salvar" action="#{agendamentoBean.alterar}" />
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

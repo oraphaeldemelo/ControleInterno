@@ -1,0 +1,253 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="titulo">Agendamento de Visitas</ui:define>
+
+	<ui:define name="corpo">
+		<h2>Agendamento de Visitas</h2>
+
+		<p:button value="Novo Agendamento"
+			outcome="/agendamento/NovoAgendamento" />
+		<p:button value="Selecionar Visitas" outcome="/agendamento/SelecionaAgendamentos"/>
+
+		<div>
+			<p:tabView>
+				<p:tab title="Sede" id="sede">
+
+					<h:form id="form">
+						<p:dataTable scrollable="true" scrollHeight="500"
+							value="#{listaAgendamentoBean.visitasSede}" var="visita"
+							rows="10" paginator="true" >
+
+
+							<p:column headerText="Data do Pedido" style="width:80px">
+								<h:outputText value="#{visita.dataAgendamento}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Nome" filterBy="#{visita.nome}">
+								<h:outputText value="#{visita.nome}"  />
+							</p:column>
+
+							<p:column headerText="Apelido">
+								<h:outputText value="#{visita.apelido}" />
+							</p:column>
+
+							<p:column headerText="NIS">
+								<h:outputText value="#{visita.nis}" />
+							</p:column>
+
+							<p:column headerText="Rua">
+								<h:outputText value="#{visita.enderecoVisita.localRua}" />
+							</p:column>
+
+							<p:column headerText="Nº" style="width:20px">
+								<h:outputText value="#{visita.enderecoVisita.numero}" />
+							</p:column>
+
+							<!--Fazer um filtro para os bairros  -->
+							<p:column headerText="Bairro"  filterBy="#{visita.enderecoVisita.localidadeBairro}">
+								<h:outputText value="#{visita.enderecoVisita.localidadeBairro}" />
+							</p:column>
+
+							<p:column headerText="Ponto de Referência">
+								<h:outputText value="#{visita.enderecoVisita.pontoReferencia}" />
+							</p:column>
+
+							<p:column headerText="Observações">
+								<h:outputText value="#{visita.observacao}" />
+							</p:column>
+
+							<p:column headerText="Motivo da Visita">
+								<h:outputText value="#{visita.motivoVisita}" />
+							</p:column>
+
+							<p:column headerText="Ações" >
+								<h:link outcome="/agendamento/NovoAgendamento" title="Editar">
+									<h:graphicImage library="images" name="edit.png"></h:graphicImage>
+									<f:param name="visita" value="#{visita.id}" />
+								</h:link>
+
+								<p:commandLink onclick="PF('confirmacao').show();"
+									update="@form:painelConfirm">
+									<h:graphicImage library="images" name="checked.png"></h:graphicImage>
+									<f:setPropertyActionListener value="#{visita}"
+										target="#{listaAgendamentoBean.visitaSelecionada}" />
+								</p:commandLink>
+
+								<h:link outcome="/Home/" title="Urgente">
+									<h:graphicImage library="images" name="warning.png"></h:graphicImage>
+								</h:link>
+
+							</p:column>
+
+						</p:dataTable>
+
+						<p:dialog header="Confirmação de Conclusão"
+							message="Informe dados da visita:" widgetVar="confirmacao"
+							modal="true">
+
+							<p:panelGrid id="painelConfirm" columns="2">
+								<h:outputLabel value="Detalhes da confirmação" />
+								<h:inputText
+									value="#{listaAgendamentoBean.visitaSelecionada.situacao}" />
+							</p:panelGrid>
+							<p:commandButton value="Concluir"
+								oncomplete="PF('confirmacao').hide()"
+								action="#{listaAgendamentoBean.concluir}" />
+
+						</p:dialog>
+					</h:form>
+
+				</p:tab>
+
+				<p:tab title="Rural">
+
+					<p:outputLabel value="Pesquisar: " />
+					<p:inputText />
+					<h:form id="formRural">
+						<p:dataTable scrollable="true" scrollHeight="500" paginator="true"
+							value="#{listaAgendamentoBean.visitasRural}" var="rural">
+
+
+							<p:column headerText="Data do Pedido">
+								<h:outputText value="21/02/2018" />
+							</p:column>
+
+							<p:column headerText="Nome">
+								<h:outputText value="#{rural.nome}" />
+							</p:column>
+
+							<p:column headerText="Apelido">
+								<h:outputText value="#{rural.apelido}" />
+							</p:column>
+
+							<p:column headerText="NIS">
+								<h:outputText value="#{rural.nis}" />
+							</p:column>
+
+							<p:column headerText="Rua">
+								<h:outputText value="#{rural.enderecoVisita.localRua}" />
+							</p:column>
+
+							<p:column headerText="Nº" style="width:20px">
+								<h:outputText value="#{rural.enderecoVisita.numero}" />
+							</p:column>
+
+							<p:column headerText="Bairro">
+								<h:outputText value="#{rural.enderecoVisita.localidadeBairro}" />
+							</p:column>
+
+							<p:column headerText="Ponto de Referência">
+								<h:outputText value="#{rural.enderecoVisita.pontoReferencia}" />
+							</p:column>
+
+							<p:column headerText="Observações">
+								<h:outputText value="#{rural.observacao}" />
+							</p:column>
+
+							<p:column headerText="Motivo da Visita">
+								<h:outputText value="#{rural.motivoVisita}" />
+							</p:column>
+							<!-- DEPOIS COLOCAR ICONES -->
+							<p:column headerText="Ações">
+
+								<h:link outcome="/agendamento/NovoAgendamento" title="Editar">
+									<h:graphicImage library="images" name="edit.png"></h:graphicImage>
+									<f:param name="rural" value="#{rural.id}" />
+								</h:link>
+
+								<p:commandLink onclick="PF('confirmacao').show();"
+									update="@form:painelConfirmRural">
+									<h:graphicImage library="images" name="checked.png"></h:graphicImage>
+									<f:setPropertyActionListener value="#{visita}"
+										target="#{listaAgendamentoBean.visitaSelecionada}" />
+								</p:commandLink>
+
+								<h:link outcome="/Home/" title="Urgente">
+									<h:graphicImage library="images" name="warning.png"></h:graphicImage>
+								</h:link>
+
+							</p:column>
+
+						</p:dataTable>
+
+						<p:dialog header="Confirmação de Conclusão"
+							message="Informe dados da visita:" widgetVar="confirmacao"
+							modal="true">
+
+							<p:panelGrid id="painelConfirmRural" columns="2">
+								<h:outputLabel value="Detalhes da confirmação" />
+								<h:inputText
+									value="#{listaAgendamentoBean.visitaSelecionada.situacao}" />
+							</p:panelGrid>
+							<p:commandButton value="Concluir"
+								oncomplete="PF('confirmacao').hide()"
+								action="#{listaAgendamentoBean.concluir}" />
+
+						</p:dialog>
+
+					</h:form>
+				</p:tab>
+
+				<p:tab title="Concluídas">
+					<p:dataTable scrollable="true" scrollHeight="500"
+						value="#{listaAgendamentoBean.visitasConcluidas}" var="concluida">
+						<p:column headerText="Data do Pedido">
+							<h:outputText value="#{concluida.dataAgendamento}" />
+						</p:column>
+
+						<p:column headerText="Nome">
+							<h:outputText value="#{concluida.nome}" />
+						</p:column>
+
+						<p:column headerText="Apelido">
+							<h:outputText value="#{concluida.apelido}" />
+						</p:column>
+
+						<p:column headerText="NIS">
+							<h:outputText value="#{concluida.nis}" />
+						</p:column>
+
+						<p:column headerText="Rua">
+							<h:outputText value="#{concluida.enderecoVisita.localRua}" />
+						</p:column>
+
+						<p:column headerText="Nº">
+							<h:outputText value="#{concluida.enderecoVisita.numero}" />
+						</p:column>
+
+						<p:column headerText="Bairro">
+							<h:outputText
+								value="#{concluida.enderecoVisita.localidadeBairro}" />
+						</p:column>
+
+						<p:column headerText="Ponto de Referência">
+							<h:outputText value="#{concluida.enderecoVisita.pontoReferencia}" />
+						</p:column>
+
+						<p:column headerText="Observações">
+							<h:outputText value="#{concluida.observacao}" />
+						</p:column>
+
+						<p:column headerText="Motivo da Visita">
+							<h:outputText value="#{concluida.motivoVisita}" />
+						</p:column>
+
+						<p:column headerText="Situação">
+							<h:outputText value="#{concluida.situacao}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+
+			</p:tabView>
+
+		</div>
+
+	</ui:define>
+</ui:composition>
